@@ -5,20 +5,13 @@
     <title>Telefonbuch</title>
 	<script src="../node_modules/angular/angular.js"></script>
 	<script src="telefonbuch.module.js"></script>
+	<script src="TelefonbuchAnzeige/TelefonbuchAnzeige.module.js"></script>
+	<script src="TelefonbuchAnzeige/TelefonbuchAnzeige.component.js"></script>
   </head>
-  <body ng-controller="telefonbuchAnzeige">
+  <body>
   <h1>Kontakte</h1>
   <p> Neuer Eintrag </p>
   <p> Suchen </p>
-  <ul>
-	<li ng-repeat="kontakt in Kontakte">
-		<p>Bearbeiten & Löschen</p>
-		<p>{{kontakt.Name}}<br/>
-		{{kontakt.Email}}<br/>
-		{{kontakt.Tel1}}<br/>
-		{{kontakt.Tel2}}<br/>
-		{{kontakt.Addresse}}<br/></p>
-	</li>
-  </ul>
+  <telefonbuch-anzeige></telefonbuch-anzeige>
   </body>
 </html>
