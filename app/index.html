@@ -1,29 +1,23 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="telefonbuch">
   <head>
     <meta charset="utf-8">
     <title>Telefonbuch</title>
+	<script src="../node_modules/angular/angular.js"></script>
+	<script src="telefonbuch.module.js"></script>
   </head>
-  <body>
+  <body ng-controller="telefonbuchAnzeige">
   <h1>Kontakte</h1>
   <p> Neuer Eintrag </p>
   <p> Suchen </p>
   <ul>
-	<li>
+	<li ng-repeat="kontakt in Kontakte">
 		<p>Bearbeiten & Löschen</p>
-		<p>Formatierter Name<br/>
-		Email Addresse<br/>
-		Telefonnummer 1<br/>
-		Telefonnummer 2<br/>
-		Straße<br/></p>
-	</li>
-	<li>
-		<p>Bearbeiten & Löschen</p>
-		<p>Formatierter Name<br/>
-		Email Addresse<br/>
-		Telefonnummer 1<br/>
-		Telefonnummer 2<br/>
-		Straße<br/></p>
+		<p>{{kontakt.Name}}<br/>
+		{{kontakt.Email}}<br/>
+		{{kontakt.Tel1}}<br/>
+		{{kontakt.Tel2}}<br/>
+		{{kontakt.Addresse}}<br/></p>
 	</li>
   </ul>
   </body>
