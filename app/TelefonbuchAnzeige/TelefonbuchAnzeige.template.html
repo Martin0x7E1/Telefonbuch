@@ -1,10 +1,26 @@
   <ul>
 	<li ng-repeat="kontakt in $ctrl.Kontakte">
-		<p>Bearbeiten & Löschen</p>
-		<p>{{kontakt.Name}}<br/>
-		{{kontakt.Email}}<br/>
-		{{kontakt.Tel1}}<br/>
-		{{kontakt.Tel2}}<br/>
-		{{kontakt.Addresse}}<br/></p>
+		<div ng-show="!kontakt.BeingEdited && !kontakt.Dummy">
+			<p><button type="button" id="edit">Bearbeiten</button></p>
+			<p>{{kontakt.Name}}<br/>
+			{{kontakt.Email}}<br/>
+			{{kontakt.Tel1}}<br/>
+			{{kontakt.Tel2}}<br/>
+			{{kontakt.Addresse}}<br/></p>
+		</div>
+		<div ng-show="kontakt.BeingEdited">
+			<p ng-show="kontakt.Dummy"> Neuer Eintrag
+			</p>
+			<button type="button" id="save">Speichern</button>
+			<button type="button" id="cancel">Abbrechen</button>
+			<button type="button" id="delete">Eintrag Löschen</button>
+			<br/>
+			<input id="EditVorname" placeholder="Vorname"></input><br/>
+			<input id="EditNachname" placeholder="Nachname"></input><br/>
+			<input id="EditEmail" placeholder="Email Addresse"></input><br/>
+			<input id="EditAddresse" placeholder="Addresse"></input><br/>
+			<input id="EditTel1" placeholder="Telefonnummer"></input><br/>
+			<input id="EditTel2" placeholder="Telefonnummer"></input><br/>
+		</div>
 	</li>
   </ul>
