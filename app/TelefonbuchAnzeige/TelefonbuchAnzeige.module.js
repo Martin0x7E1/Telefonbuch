@@ -1,4 +1,3 @@
-
-angular.module("telefonbuchAnzeige", []);
+angular.module("telefonbuchAnzeige", ['telefonbuchEintrag']);
 
 

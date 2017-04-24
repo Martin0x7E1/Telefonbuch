@@ -1,33 +1,20 @@
   <ul>
 	<li ng-repeat="kontakt in $ctrl.Kontakte | orderBy:['Nachname', 'Vorname']">
-		<div ng-show="kontakt.Index != $ctrl.EditedIndex">
-			<p><button type="button" id="edit" ng-click="$ctrl.StartEdit(kontakt.Index)">Bearbeiten</button></p>
-			<p>{{kontakt.Vorname}} {{kontakt.Nachname}}<br/>
-			{{kontakt.Email}}<br/>
-			{{kontakt.Tel1}}<br/>
-			{{kontakt.Tel2}}<br/>
-			{{kontakt.Addresse}}<br/></p>
-		</div>
-		<div ng-show="kontakt.Index == $ctrl.EditedIndex">
-			<div ng-show="!$ctrl.ConfirmDelete">
-				<button type="button" id="save" ng-click="$ctrl.SaveEdit()">Speichern</button>
-				<button type="button" id="cancel" ng-click="$ctrl.CancelEdit()">Abbrechen</button>
-				<button type="button" id="delete"  ng-click="$ctrl.DeleteEntry1()">Eintrag Löschen</button>
-				<br/>
-			</div>
-			<div ng-show="$ctrl.ConfirmDelete">
-				Soll der folgende Eintrag wirklich gelöscht werden ?
-				<br/>
-				<button type="button" id="delete"  ng-click="$ctrl.DeleteEntry2(false)">Eintrag nicht Löschen</button>
-				<button type="button" id="delete"  ng-click="$ctrl.DeleteEntry2(true)">Eintrag Löschen</button>
-				<br/>
-			</div>
-			<input id="EditVorname" placeholder="Vorname" ng-model="$ctrl.EditedEntry.Vorname"></input><br/>
-			<input id="EditNachname" placeholder="Nachname" ng-model="$ctrl.EditedEntry.Nachname"></input><br/>
-			<input id="EditEmail" placeholder="Email Addresse" ng-model="$ctrl.EditedEntry.Email"></input><br/>
-			<input id="EditAddresse" placeholder="Addresse" ng-model="$ctrl.EditedEntry.Addresse"></input><br/>
-			<input id="EditTel1" placeholder="Telefonnummer" ng-model="$ctrl.EditedEntry.Tel1"></input><br/>
-			<input id="EditTel2" placeholder="Telefonnummer" ng-model="$ctrl.EditedEntry.Tel2"></input><br/>
-		</div>
+		<telefonbuch-eintrag-anzeige 
+			kontakt="kontakt" 
+			on-edit='$ctrl.StartEdit(kontakt.Index)'
+			ng-show="kontakt.Index != $ctrl.EditedIndex">
+		</telefonbuch-eintrag-anzeige>
+		<telefonbuch-eintrag-edit 
+			kontakt="kontakt"
+			on-save='$ctrl.SaveEdit()'
+			on-cancel='$ctrl.CancelEdit()'
+			on-delete1='$ctrl.DeleteEntry1()'
+			on-delete-no='$ctrl.DeleteEntry2(false)'
+			on-delete-yes='$ctrl.DeleteEntry2(true)'
+			dummy='$ctrl.EditedEntry'
+			confirm-delete='$ctrl.ConfirmDelete'
+			ng-show="kontakt.Index == $ctrl.EditedIndex">
+		</telefonbuch-eintrag-edit>
 	</li>
   </ul>
