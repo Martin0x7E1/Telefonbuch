@@ -9,7 +9,7 @@ angular.
 			onDeleteYes: '&',
 			onDeleteNo: '&',
 			confirmDelete: '=',
-			dummy: '='
+			editedEntry: '='
 			}
 	});
 

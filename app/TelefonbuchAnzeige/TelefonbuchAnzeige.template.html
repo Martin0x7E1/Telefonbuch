@@ -1,20 +1,39 @@
-  <ul>
+<p>
+	<button type="button" ng-click="$ctrl.InitStoreFill()">Alle Einträge durch Testeinträge ersetzen</button><br/>
+	<button type="button" ng-click="$ctrl.InitStoreEmpty()">Alle Einträge löschen</button>
+</p>
+<div ng-if="!$ctrl.NewEntry">
+	<button type="button" id="StartNewEntry" ng-click="$ctrl.StartNewEntry()">Neuen Eintrag anlegen</button>
+</div>
+
+<telefonbuch-eintrag-neu
+	ng-if="$ctrl.NewEntry"
+	on-save='$ctrl.SaveNewEntry()'
+	on-cancel='$ctrl.CancelNewEntry()'
+	new-entry='$ctrl.EditedEntry'
+></telefonbuch-eintrag-neu>
+
+<p ng-if="!$ctrl.Kontakte.length">Keine Einträge vorhanden</p>
+
+<input ng-model="$ctrl.StorageText"></input><br/>
+
+<ul>
 	<li ng-repeat="kontakt in $ctrl.Kontakte | orderBy:['Nachname', 'Vorname']">
 		<telefonbuch-eintrag-anzeige 
+			ng-if="kontakt.Index != $ctrl.EditedIndex"
 			kontakt="kontakt" 
 			on-edit='$ctrl.StartEdit(kontakt.Index)'
-			ng-show="kontakt.Index != $ctrl.EditedIndex">
-		</telefonbuch-eintrag-anzeige>
+		></telefonbuch-eintrag-anzeige>
 		<telefonbuch-eintrag-edit 
-			kontakt="kontakt"
+			ng-if="kontakt.Index == $ctrl.EditedIndex"
 			on-save='$ctrl.SaveEdit()'
 			on-cancel='$ctrl.CancelEdit()'
 			on-delete1='$ctrl.DeleteEntry1()'
 			on-delete-no='$ctrl.DeleteEntry2(false)'
 			on-delete-yes='$ctrl.DeleteEntry2(true)'
-			dummy='$ctrl.EditedEntry'
 			confirm-delete='$ctrl.ConfirmDelete'
-			ng-show="kontakt.Index == $ctrl.EditedIndex">
-		</telefonbuch-eintrag-edit>
+			edited-entry='$ctrl.EditedEntry'
+		></telefonbuch-eintrag-edit>
 	</li>
-  </ul>
+</ul>
+
