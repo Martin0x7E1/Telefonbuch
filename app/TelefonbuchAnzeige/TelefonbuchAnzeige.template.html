@@ -1,10 +1,11 @@
-<p>
-	<button type="button" ng-click="$ctrl.InitStoreFill()">Alle Einträge durch Testeinträge ersetzen</button><br/>
-	<button type="button" ng-click="$ctrl.InitStoreEmpty()">Alle Einträge löschen</button>
-</p>
-<div ng-if="!$ctrl.NewEntry">
-	<button type="button" id="StartNewEntry" ng-click="$ctrl.StartNewEntry()">Neuen Eintrag anlegen</button>
-</div>
+<button
+	ng-if="!$ctrl.NewEntry" 
+	ng-click="$ctrl.StartNewEntry()"
+	type="button"
+	id="StartNewEntry"
+	class="button_1_1"
+	ng-class="{button_disabled: ($ctrl.EditedIndex != -1 || $ctrl.NewEntry)}"
+>Neuen Eintrag anlegen</button>
 
 <telefonbuch-eintrag-neu
 	ng-if="$ctrl.NewEntry"
@@ -15,13 +16,13 @@
 
 <p ng-if="!$ctrl.Kontakte.length">Keine Einträge vorhanden</p>
 
-<input ng-model="$ctrl.StorageText"></input><br/>
 
 <ul>
 	<li ng-repeat="kontakt in $ctrl.Kontakte | orderBy:['Nachname', 'Vorname']">
 		<telefonbuch-eintrag-anzeige 
 			ng-if="kontakt.Index != $ctrl.EditedIndex"
 			kontakt="kontakt" 
+			edit-disabled="($ctrl.EditedIndex != -1 || $ctrl.NewEntry)"
 			on-edit='$ctrl.StartEdit(kontakt.Index)'
 		></telefonbuch-eintrag-anzeige>
 		<telefonbuch-eintrag-edit 
@@ -37,3 +38,12 @@
 	</li>
 </ul>
 
+
+<div>
+<h2>NUR ZU TESTZWECKEN</h2>
+<p>
+	<button type="button" ng-click="$ctrl.InitStoreFill()">Alle Einträge durch Testeinträge ersetzen</button><br/>
+	<button type="button" ng-click="$ctrl.InitStoreEmpty()">Alle Einträge löschen</button>
+</p>
+<input ng-model="$ctrl.StorageText"></input><br/>
+</div>

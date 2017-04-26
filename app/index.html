@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>Telefonbuch</title>
+	<link rel="stylesheet" type="text/css" href="telefonbuch.css"/>
 	<script src="../node_modules/angular/angular.js"></script>
 	<script src="telefonbuch.module.js"></script>
 	<script src="TelefonbuchAnzeige/TelefonbuchAnzeige.module.js"></script>
@@ -14,9 +15,10 @@
 	<script src="TelefonbuchEintrag/TelefonbuchEintragNeu.component.js"></script>
   </head>
   <body>
-  <h1>Kontakte</h1>
-  <p> Neuer Eintrag </p>
+  <div class="telefonbuch">
+  <h1>Telefonbuch</h1>
   <p> Suchen </p>
-  <telefonbuch-anzeige></telefonbuch-anzeige>
+  <telefonbuch-anzeige ></telefonbuch-anzeige>
+  </div>
   </body>
 </html>

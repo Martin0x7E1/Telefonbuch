@@ -1,0 +1,74 @@
+body {
+	color: #FFF;
+	background-color: #DDF;
+	text-align: center;
+	font-size: 16px;
+}
+
+ul {
+	list-style-type: none;
+	padding: 0;
+}
+
+li {
+	min-height: 200px;
+}
+
+input {
+	margin: 20px;
+	padding: 0px;
+	border: 0;
+	border-bottom: 2px solid #FFF;
+	background: transparent;
+	color: #FFF;
+	width: 80%;
+}
+
+button {
+	border: 1px solid white;
+	color: white;
+	margin: 2px;
+	padding: 10px;
+	background: none;
+}
+
+.telefonbuch {
+	background-color: rgba(0, 0, 0, 0.8);
+	margin: 0 auto;
+	width: 500px;
+}
+
+.button_1_1 {
+	border: 1px solid white;
+	color: white;
+	padding: 10px;
+	background: none;
+	width: 90%
+}
+.button_1_3 {
+	width: 30%
+}
+
+.button_1_2 {
+	width: 45%;
+}
+
+.button_delete_no {/* Leichte Grünfärbung zur besseren Erfassung. */
+	width: 45%;
+	border-color: #afa;
+}
+
+.button_delete_yes { /* Leichte Rotfärbung zur besseren Erfassung. */
+	width: 45%;
+	border-color: #faa;
+}
+
+.button_disabled {
+	color: #777;
+	border-color: #777;
+}
+
+.button_header {
+	color: #fff; /* Namen sollen immer in weiß geschrieben werden, auch wenn der Button deaktiviert ist. */
+	font-size: 120%;
+}

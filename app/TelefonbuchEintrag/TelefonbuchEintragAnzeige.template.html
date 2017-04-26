@@ -1,6 +1,5 @@
 <div>
-	<button type="button" id="edit" ng-click="$ctrl.onEdit()">Bearbeiten</button><br/>
-	{{$ctrl.kontakt.Vorname}} {{$ctrl.kontakt.Nachname}}<br/>
+	<button type="button" id="edit" ng-click="$ctrl.onEdit()" class="button_1_1 button_header" ng-class="{button_disabled: $ctrl.editDisabled}">{{$ctrl.kontakt.Vorname}} {{$ctrl.kontakt.Nachname}}</button><br/>
 	{{$ctrl.kontakt.Email}}<br/>
 	{{$ctrl.kontakt.Tel1}}<br/>
 	{{$ctrl.kontakt.Tel2}}<br/>

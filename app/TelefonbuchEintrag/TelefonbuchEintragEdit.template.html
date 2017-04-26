@@ -1,15 +1,15 @@
 <div>
 	<div>
-		<button type="button" id="save" ng-click="$ctrl.onSave()">Speichern</button>
-		<button type="button" id="cancel" ng-click="$ctrl.onCancel()">Abbrechen</button>
-		<button type="button" id="delete"  ng-click="$ctrl.onDelete1()">Eintrag Löschen</button>
+		<button type="button" id="save" ng-click="$ctrl.onSave()" class="button_1_3">Speichern</button>
+		<button type="button" id="cancel" ng-click="$ctrl.onCancel()" class="button_1_3">Abbrechen</button>
+		<button type="button" id="delete"  ng-click="$ctrl.onDelete1()" class="button_1_3">Eintrag Löschen</button>
 		<br/>
 	</div>
 	<div ng-show="$ctrl.confirmDelete">
 		Soll der folgende Eintrag wirklich gelöscht werden ?
 		<br/>
-		<button type="button" id="delete"  ng-click="$ctrl.onDeleteNo()">Eintrag nicht Löschen</button>
-		<button type="button" id="delete"  ng-click="$ctrl.onDeleteYes()">Eintrag Löschen</button>
+		<button type="button" id="delete"  ng-click="$ctrl.onDeleteNo()" class="button_delete_no">Eintrag nicht Löschen</button>
+		<button type="button" id="delete"  ng-click="$ctrl.onDeleteYes()" class="button_delete_yes">Eintrag Löschen</button>
 		<br/>
 	</div>
 	<input id="EditVorname" placeholder="Vorname" ng-model="$ctrl.editedEntry.Vorname"></input><br/>
