@@ -1,0 +1,9 @@
+{
+  "name": "telefonbuch",
+  "description": "Ein einfaches Telefonbuch mit AngularJS 1.x",
+  "private": true,
+  "dependencies": {
+    "angular": "1.6.x",
+    "angular-mocks": "1.6.x"
+  }
+}

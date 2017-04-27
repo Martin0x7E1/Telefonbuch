@@ -1,10 +1,9 @@
 angular.
 	module("telefonbuchAnzeige").
 	component("telefonbuchAnzeige", {
-		templateUrl: "TelefonbuchAnzeige/TelefonbuchAnzeige.template.html",
+		templateUrl: "./TelefonbuchAnzeige/TelefonbuchAnzeige.template.html",
 		controller: function TelefonbuchAnzeigeKonstr() {
 			var Self = this;
-
 			// zu Testzwecken werden Einträge generiert.
 			this.InitStoreFill = function (){
 				var Vornamen = ["Anja", "Bernhard", "Max", "Mara", "Thorsten", "Sabine"];
