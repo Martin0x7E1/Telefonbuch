@@ -1,6 +1,6 @@
 ﻿body {
 	color: #EEE;
-	background-color: #DDE;
+	background-color: #334;
 	text-align: center;
 	font-size: 16px;
 }
@@ -11,10 +11,12 @@ ul {
 }
 
 li {
+	font-size: 110%;
+	margin-top: 10px;
+	margin-bottom: 10px;
 	min-height: 250px;
-	margin: 10px;
 	padding: 5px;
-	background-color: #000;
+	background-color: #6F6F7E;
 }
 
 input {
@@ -36,7 +38,7 @@ button {
 }
 
 .telefonbuch {
-	background-color: rgba(0, 0, 0, 0.8);
+	background-color: #667;
 	margin: 0 auto;
 	width: 500px;
 }
@@ -53,18 +55,16 @@ button {
 }
 
 .button_delete_no {/* Leichte Grünfärbung zur besseren Erfassung. */
-	width: 45%;
 	border-color: #afa;
 }
 
 .button_delete_yes { /* Leichte Rotfärbung zur besseren Erfassung. */
-	width: 45%;
 	border-color: #faa;
 }
 
 .button_disabled {
 	color: #777;
-	border-color: #000;
+	border: 0;
 }
 
 .button_header {
