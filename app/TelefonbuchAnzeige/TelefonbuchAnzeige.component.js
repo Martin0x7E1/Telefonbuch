@@ -43,6 +43,7 @@ angular.
 				Self.NewEntry = false;
 			};
 
+			this.DoFilter = false;
 			this.Filter = "";
 			this.Kontakte = [];	// Kontakte hält die permanent gespeicherten Daten.
 			this.EditedEntry = {};
@@ -56,14 +57,15 @@ angular.
 				Self.Kontakte = JSON.parse(this.StorageText);
 			}
 
-// Die Funktion SaveLocalStorage wird verwendet um die Daten nach jedem Bearbeiten zu speichern.
 			this.SaveLocalStorage = function (todos) {
+// Die Funktion SaveLocalStorage wird verwendet um die Daten nach jedem Bearbeiten zu speichern.
 //				Self.StorageText = JSON.stringify(Self.Kontakte);
 				Self.StorageText = angular.toJson(Self.Kontakte);
 				localStorage.setItem("Telefonbuch", Self.StorageText);
 			};
-// Die Funktion CopyEntry kopiert die Werte eines Eintrags.
+
 			this.CopyEntry = function(Target, Source) {
+// Die Funktion CopyEntry kopiert die Werte eines Eintrags.
 				Target.Vorname = Source.Vorname;
 				Target.Nachname = Source.Nachname;
 				Target.Email = Source.Email;
@@ -71,7 +73,6 @@ angular.
 				Target.Tel1 = Source.Tel1;
 				Target.Tel2 = Source.Tel2;
 			}
-// StartEdit wird in Buttons verwendet um Einträge zu bearbeiten.			
 			this.StartEdit = function (Index) {
 // Wird durch Buttons aufgerufen um die Bearbeitung eines Eintrags zu starten.
 // Wird bereits ein Eintrag bearbeitet oder angelegt geschieht nichts.
@@ -120,8 +121,8 @@ angular.
 				}
 				Self.ConfirmDelete = false;
 			};
-// StartNewEntry wird in Button verwendet um die Bearbeitenmaske für einen neuen Eintrag zu öffnen.
 			this.StartNewEntry = function () {
+// StartNewEntry wird in Button verwendet um die Bearbeitenmaske für einen neuen Eintrag zu öffnen.
 				if (!Self.NewEntry && Self.EditedIndex == -1) {
 					Self.EditedEntry.Vorname = "";
 					Self.EditedEntry.Nachname = "";
@@ -149,6 +150,14 @@ angular.
 					Self.NewEntry = false;
 				}
 			};
+			this.StartFilter = function() {
+				Self.DoFilter = true;
+				Self.Filter = "";
+			}
+			this.CloseFilter = function() {
+				Self.DoFilter = false;
+				Self.Filter = "";
+			}
 		}
 	});
 

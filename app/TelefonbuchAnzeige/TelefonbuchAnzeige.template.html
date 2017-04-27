@@ -1,4 +1,24 @@
-<input placeholder="Suchen nach Namen oder Telefonnummern" ng-model="$ctrl.Filter"></input>
+<div>
+<button
+	ng-if="!$ctrl.DoFilter" 
+	ng-click="$ctrl.StartFilter()"
+	type="button"
+	class="button_1_1"
+>Suchen</button>
+
+<button
+	ng-if="$ctrl.DoFilter" 
+	ng-click="$ctrl.CloseFilter()"
+	type="button"
+	class="button_1_1"
+>Suche löschen und schließen</button>
+
+<input
+	placeholder="Name, Straße oder Telefonnummer"
+	ng-model="$ctrl.Filter"
+	ng-if="$ctrl.DoFilter" 
+></input>
+</div>
 
 <button
 	ng-if="!$ctrl.NewEntry" 
