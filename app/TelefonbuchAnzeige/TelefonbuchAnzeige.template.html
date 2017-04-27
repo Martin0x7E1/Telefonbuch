@@ -1,3 +1,5 @@
+<input placeholder="Suchen nach Namen oder Telefonnummern" ng-model="$ctrl.Filter"></input>
+
 <button
 	ng-if="!$ctrl.NewEntry" 
 	ng-click="$ctrl.StartNewEntry()"
@@ -18,7 +20,7 @@
 
 
 <ul>
-	<li ng-repeat="kontakt in $ctrl.Kontakte | orderBy:['Nachname', 'Vorname']">
+	<li ng-repeat="kontakt in $ctrl.Kontakte | orderBy:['Nachname', 'Vorname'] | filter:$ctrl.Filter">
 		<telefonbuch-eintrag-anzeige 
 			ng-if="kontakt.Index != $ctrl.EditedIndex"
 			kontakt="kontakt" 

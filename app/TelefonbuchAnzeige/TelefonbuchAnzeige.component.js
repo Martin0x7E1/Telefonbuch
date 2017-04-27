@@ -33,7 +33,7 @@ angular.
 				Self.EditedIndex = -1;
 				Self.NewEntry = false;
 			};
-			// zu Testzwecken werden Einträge generiert.
+			// zu Testzwecken werden alle Einträge gelöscht.
 			this.InitStoreEmpty = function (){
 				Self.Kontakte = [];
 				Self.SaveLocalStorage();
@@ -43,7 +43,7 @@ angular.
 				Self.NewEntry = false;
 			};
 
-			
+			this.Filter = "";
 			this.Kontakte = [];	// Kontakte hält die permanent gespeicherten Daten.
 			this.EditedEntry = {};
 			this.ConfirmDelete = false;

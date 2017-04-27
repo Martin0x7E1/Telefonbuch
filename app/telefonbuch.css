@@ -1,6 +1,6 @@
-body {
-	color: #FFF;
-	background-color: #DDF;
+﻿body {
+	color: #EEE;
+	background-color: #DDE;
 	text-align: center;
 	font-size: 16px;
 }
@@ -11,7 +11,10 @@ ul {
 }
 
 li {
-	min-height: 200px;
+	min-height: 250px;
+	margin: 10px;
+	padding: 5px;
+	background-color: #000;
 }
 
 input {
@@ -25,8 +28,8 @@ input {
 }
 
 button {
-	border: 1px solid white;
-	color: white;
+	border: 1px solid #fff;
+	color: #ddf;
 	margin: 2px;
 	padding: 10px;
 	background: none;
@@ -39,11 +42,7 @@ button {
 }
 
 .button_1_1 {
-	border: 1px solid white;
-	color: white;
-	padding: 10px;
-	background: none;
-	width: 90%
+	width: 99%
 }
 .button_1_3 {
 	width: 30%
@@ -65,7 +64,7 @@ button {
 
 .button_disabled {
 	color: #777;
-	border-color: #777;
+	border-color: #000;
 }
 
 .button_header {
