@@ -82,7 +82,13 @@
 				
 					<!-- Entweder: einfache Anzeige des Eintrags -->
 					<div ng-if="entry.Index != EditedIndex">
-						<button type="button" id="edit" ng-click="StartEdit(entry.Index)" class="button_1_1 button_header" ng-class="{button_disabled: (EditedIndex != -1 || NewEntry)}">{{entry.Vorname}} {{entry.Nachname}}</button><br/>
+						<button
+							type="button"
+							id="edit"
+							ng-click="StartEdit(entry.Index)"
+							class="button_1_1 button_header"
+							ng-class="{button_disabled: (EditedIndex != -1 || NewEntry)}"
+						>{{entry.Vorname}} {{entry.Nachname}}</button><br/>
 						{{entry.Email}}<br ng-if="entry.Email"/>
 						{{entry.Tel1}}<br ng-if="entry.Tel1"/>
 						{{entry.Tel2}}<br ng-if="entry.Tel2"/>

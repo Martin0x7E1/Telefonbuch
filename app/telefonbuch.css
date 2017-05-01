@@ -14,7 +14,7 @@ li {
 	font-size: 110%;
 	margin-top: 10px;
 	margin-bottom: 10px;
-	min-height: 250px;
+	min-height: 200px;
 	padding: 5px;
 	background-color: #6F6F7E;
 }
@@ -40,7 +40,7 @@ button {
 .telefonbuch {
 	background-color: #667;
 	margin: 0 auto;
-	width: 500px;
+	width: 400px;
 }
 
 .button_1_1 {
@@ -70,4 +70,5 @@ button {
 .button_header {
 	color: #fff; /* Namen sollen immer in weiß geschrieben werden, auch wenn der Button deaktiviert ist. */
 	font-size: 120%;
+	margin-bottom: 10px;
 }
