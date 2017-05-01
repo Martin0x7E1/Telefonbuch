@@ -2,9 +2,31 @@ angular.
 	module("telefonbuch").
 	controller("telefonbuchAnzeige", ['$scope', function ($scope) {
 			var Self = $scope;
+
+			// Die folgenden Zeilen beinhalten alle Variablen die den Zustand des Telefonbuchs ausmachen.
+			Self.Filter = {
+				Enabled: false,
+				Text: ""
+			};
+			Self.Entries = [];	// Entries hält die permanent gespeicherten Daten.
+			Self.EditedEntry = {};
+			Self.ConfirmDelete = false;
+			Self.EditedIndex = -1;
+			Self.NewEntry = false;
 			
-// zu Testzwecken werden Einträge generiert.
+			
+			// Im folgenden geschieht die Initialisierung.
+			// In diesem Fall handelt es sich nur um das Laden der Daten aus dem LocalStorage, falls möglich.
+			// Ansonsten geschieht nichts, da in Self.Entries schon ein leeres Array besteht.
+			var StorageText = localStorage.getItem("Telefonbuch"); 
+			if (StorageText) {
+				Self.Entries = JSON.parse(StorageText);
+			}
+
+			
 			Self.InitStoreFill = function (){
+// Diese Funktion wird zu Testzwecken aufgerufen.
+// Es werden Beispieleinträge generiert.
 				var Vornamen = ["Anja", "Bernhard", "Max", "Mara", "Thorsten", "Sabine"];
 				var Nachnamen = ["Schmidt", "Müller", "Mayer", "Leineweber"];
 				Self.Entries = Array(Vornamen.length * Nachnamen.length);
@@ -31,8 +53,9 @@ angular.
 				Self.EditedIndex = -1;
 				Self.NewEntry = false;
 			};
-// zu Testzwecken werden alle Einträge gelöscht.
 			Self.InitStoreEmpty = function (){
+// Diese Funktion wird zu Testzwecken aufgerufen.
+// Es werden alle Einträge gelöscht.
 				Self.Entries = [];
 				Self.SaveLocalStorage();
 				Self.EditedEntry = {};
@@ -40,30 +63,11 @@ angular.
 				Self.EditedIndex = -1;
 				Self.NewEntry = false;
 			};
-
-			Self.Filter = {
-				Enabled: false,
-				Text: ""
-			};
-			Self.Entries = [];	// Entries hält die permanent gespeicherten Daten.
-			Self.EditedEntry = {};
-			Self.ConfirmDelete = false;
-			Self.EditedIndex = -1;
-			Self.NewEntry = false;
-
-// Es wird versucht die Einträge aus dem LocalStorage zu laden.
-			Self.StorageText = localStorage.getItem("Telefonbuch");
-			if (Self.StorageText) {
-				Self.Entries = JSON.parse(Self.StorageText);
-			}
-
 			Self.SaveLocalStorage = function (todos) {
 // Die Funktion SaveLocalStorage wird verwendet um die Daten nach jedem Bearbeiten zu speichern.
-//				Self.StorageText = JSON.stringify(Self.Entries);
-				Self.StorageText = angular.toJson(Self.Entries);
-				localStorage.setItem("Telefonbuch", Self.StorageText);
+				var StorageText = angular.toJson(Self.Entries);
+				localStorage.setItem("Telefonbuch", StorageText);
 			};
-
 			Self.CopyEntry = function(Target, Source) {
 // Die Funktion CopyEntry kopiert die Werte eines Eintrags.
 				Target.Vorname = Source.Vorname;
@@ -73,9 +77,11 @@ angular.
 				Target.Tel1 = Source.Tel1;
 				Target.Tel2 = Source.Tel2;
 			}
+			
 			Self.StartEdit = function (Index) {
-// Wird durch Buttons aufgerufen um die Bearbeitung eines Eintrags zu starten.
+// Diese Funktion wird bei einem Klick auf den Kopf eines Eintrages aufgerufen.
 // Wird bereits ein Eintrag bearbeitet oder angelegt geschieht nichts.
+// Ansonsten wird die Bearbeitenmaske für den jeweiligen Eintrag geöffnet.
 				if (!Self.NewEntry && Self.EditedIndex == -1 && Index >= 0 && Index < Self.Entries.length) {
 					Self.CopyEntry(Self.EditedEntry, Self.Entries[Index]);
 					Self.EditedIndex = Index;
@@ -84,13 +90,15 @@ angular.
 				}
 			};
 			Self.CancelEdit = function () {
-// Ist die Bearbeitenmaske für einen Eintrag offen wird diese geschlossen. Ansonsten passiert nichts.
+// Ist die Bearbeitenmaske für einen Eintrag offen und wird auf Abbrechen gedrückt, so wird die Maske geschlossen. 
+// Ansonsten kann diese Funktion gar nicht aufgerufen werden, daher passiert dann nichts.
 				if (Self.EditedIndex != -1) {
 					Self.EditedIndex = -1;
 				}
 			};
 			Self.SaveEdit = function () {
-// Ist die Bearbeitenmaske für einen Eintrag offen werden die Änderungen übernommen und es wird gespeichert. Ansonsten passiert nichts.
+// Ist die Bearbeitenmaske für einen Eintrag offen werden die Änderungen gespeichert und die Maske geschlossen.
+// Ansonsten kann diese Funktion gar nicht aufgerufen werden, daher passiert dann nichts.
 				if (Self.EditedIndex != -1) {
 					Self.CopyEntry(Self.Entries[Self.EditedIndex], Self.EditedEntry);
 					Self.SaveLocalStorage();
@@ -98,7 +106,8 @@ angular.
 				}
 			};
 			Self.DeleteEntry1 = function () {
-// Ist die Bearbeitenmaske für einen Eintrag offen wird nach Bestätigung gefragt.
+// Ist die Bearbeitenmaske für einen Eintrag offen werden und wird auf den Button Löschen gedrückt,
+// so wird eine Bestätigung des Löschens gefordert.
 				if (Self.EditedIndex != -1) {
 					Self.ConfirmDelete = true;
 				}
@@ -121,8 +130,11 @@ angular.
 				}
 				Self.ConfirmDelete = false;
 			};
+			
+			
 			Self.StartNewEntry = function () {
-// StartNewEntry wird in Button verwendet um die Bearbeitenmaske für einen neuen Eintrag zu öffnen.
+// StartNewEntry wird in einem Button verwendet um die Bearbeitenmaske für einen neuen Eintrag zu öffnen.
+// Dieses geschieht aber nur, falls nicht schon ein Eintrag bearbeitet wird.
 				if (!Self.NewEntry && Self.EditedIndex == -1) {
 					Self.EditedEntry.Vorname = "";
 					Self.EditedEntry.Nachname = "";
@@ -135,7 +147,7 @@ angular.
 				}
 			};
 			Self.SaveNewEntry = function () {
-// Ist die Bearbeitenmaske für einen neuen Eintrag offen wird ein neuer Eintrag erstellt und es wird gespeichert. Ansonsten passiert nichts.
+// Ist die Bearbeitenmaske für einen neuen Eintrag offen und wird der Button Anlegen gedrückt, wird der neue Eintrag angelegt.
 				if (Self.NewEntry) {
 					Self.NewEntry = false;
 					Self.Entries.push({});
@@ -145,17 +157,21 @@ angular.
 				}
 			};
 			Self.CancelNewEntry = function () {
-// Ist die Bearbeitenmaske für einen Eintrag offen wird diese geschlossen. Ansonsten passiert nichts.
+// Ist die Bearbeitenmaske für einen Eintrag offen und wird Abbrechen gedrückt, wird diese geschlossen.
 				if (Self.NewEntry) {
 					Self.NewEntry = false;
 				}
 			};
+			
+			
+// Ist die Suchfunktion geschlossen und wird auf den Button Suchen gedrückt, wird die Suchmaske geöffnet.
 			Self.StartFilter = function() {
 				Self.Filter = {
 					Enabled: true,
 					Text: ""
 				};
 			}
+// Ist die Suchfunktion geschlossen und wird auf den Button Suche löschen und schließen gedrückt, wird die Suchmaske gelöscht und geschlossen.
 			Self.CloseFilter = function() {
 				Self.Filter = {
 					Enabled: false,

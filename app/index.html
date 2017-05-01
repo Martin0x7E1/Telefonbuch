@@ -41,7 +41,12 @@
 
 			
 			<!--------------------------------------------------------------------->
-			<!-- Neuer Eintrag -->
+			<!-- Maske zum Anlegen eines neuen Eintrages
+			
+				Oben erscheint ein Button der das Anlegen startet.
+				Wird der Button geklickt, werden stattdessen zwei Buttons Anlegen und Abbrechen angezeigt.
+				Darunter erscheint ein Formular zum Eintragen der Kontaktdaten.
+			-->
 			<button 
 				ng-if="!NewEntry" 
 				ng-click="StartNewEntry()"
@@ -66,7 +71,11 @@
 
 
 			<!--------------------------------------------------------------------->
-			<!-- Anzeige der Einträge  als ungeordnete Liste -->
+			<!-- Anzeige der Einträge  als ungeordnete Liste.
+				
+				Der Kopf eines jeden Eintrags besteht aus einem Button, welcher die Bearbeitung des Eintrags einleitet.
+				Es kann immer nur ein Eintrag bearbeitet werden.
+			-->
 			<p ng-if="!Entries.length">Keine Einträge vorhanden</p>
 			<ul ng-if="Entries.length">
 				<li ng-repeat="entry in Entries | orderBy:['Nachname', 'Vorname'] | filter:Filter.Text">
