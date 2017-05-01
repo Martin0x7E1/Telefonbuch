@@ -18,25 +18,26 @@
 			<!-- Suchen -->
 			<div> 
 				<button
-					ng-if="!DoFilter" 
+					ng-if="!Filter.Enabled" 
 					ng-click="StartFilter()"
 					type="button"
 					class="button_1_1"
 				>Suchen</button>
 
-				<button
-					ng-if="DoFilter" 
-					ng-click="CloseFilter()"
-					type="button"
-					class="button_1_1"
-				>Suche löschen und schließen</button>
+				<div ng-if="Filter.Enabled">
+					<button
+						ng-click="CloseFilter()"
+						type="button"
+						class="button_1_1"
+					>Suche löschen und schließen</button>
 
-				<input
-					placeholder="Name, Straße oder Telefonnummer"
-					ng-model="Filter"
-					ng-if="DoFilter" 
-				></input>
+					<input
+						placeholder="Name, Straße oder Telefonnummer"
+						ng-model="Filter.Text"
+					></input>
+				</div>
 			</div>
+			
 
 			
 			<!--------------------------------------------------------------------->
@@ -66,41 +67,41 @@
 
 			<!--------------------------------------------------------------------->
 			<!-- Anzeige der Einträge  als ungeordnete Liste -->
-			<p ng-if="!Kontakte.length">Keine Einträge vorhanden</p>
-			<ul ng-if="Kontakte.length">
-				<li ng-repeat="kontakt in Kontakte | orderBy:['Nachname', 'Vorname'] | filter:Filter">
+			<p ng-if="!Entries.length">Keine Einträge vorhanden</p>
+			<ul ng-if="Entries.length">
+				<li ng-repeat="entry in Entries | orderBy:['Nachname', 'Vorname'] | filter:Filter.Text">
 				
-				<!-- Entweder: einfache Anzeige des Eintrags -->
-				<div ng-if="kontakt.Index != EditedIndex">
-					<button type="button" id="edit" ng-click="StartEdit(kontakt.Index)" class="button_1_1 button_header" ng-class="{button_disabled: (EditedIndex != -1 || NewEntry)}">{{kontakt.Vorname}} {{kontakt.Nachname}}</button><br/>
-					{{kontakt.Email}}<br ng-if="kontakt.Email"/>
-					{{kontakt.Tel1}}<br ng-if="kontakt.Tel1"/>
-					{{kontakt.Tel2}}<br ng-if="kontakt.Tel2"/>
-					{{kontakt.Addresse}}<br ng-if="kontakt.Addresse"/></p>
-				</div>
-				
-				<!-- oder: Maske zum Bearbeiten -->
-				<div ng-if="kontakt.Index == EditedIndex"> 
-					<div>
-						<button type="button" id="save" ng-click="SaveEdit()" class="button_1_3">Speichern</button>
-						<button type="button" id="cancel" ng-click="CancelEdit()" class="button_1_3">Abbrechen</button>
-						<button type="button" id="delete"  ng-click="DeleteEntry1()" class="button_1_3">Eintrag Löschen</button>
-						<br/>
+					<!-- Entweder: einfache Anzeige des Eintrags -->
+					<div ng-if="entry.Index != EditedIndex">
+						<button type="button" id="edit" ng-click="StartEdit(entry.Index)" class="button_1_1 button_header" ng-class="{button_disabled: (EditedIndex != -1 || NewEntry)}">{{entry.Vorname}} {{entry.Nachname}}</button><br/>
+						{{entry.Email}}<br ng-if="entry.Email"/>
+						{{entry.Tel1}}<br ng-if="entry.Tel1"/>
+						{{entry.Tel2}}<br ng-if="entry.Tel2"/>
+						{{entry.Addresse}}<br ng-if="entry.Addresse"/></p>
 					</div>
-					<div ng-if="ConfirmDelete">
-						Soll der folgende Eintrag wirklich gelöscht werden ?
-						<br/>
-						<button type="button" id="delete"  ng-click="DeleteEntry2(false)" class="button_delete_no">Eintrag nicht Löschen</button>
-						<button type="button" id="delete"  ng-click="DeleteEntry2(true)" class="button_delete_yes">Eintrag Löschen</button>
-						<br/>
+					
+					<!-- oder: Maske zum Bearbeiten -->
+					<div ng-if="entry.Index == EditedIndex"> 
+						<div>
+							<button type="button" id="save" ng-click="SaveEdit()" class="button_1_3">Speichern</button>
+							<button type="button" id="cancel" ng-click="CancelEdit()" class="button_1_3">Abbrechen</button>
+							<button type="button" id="delete"  ng-click="DeleteEntry1()" class="button_1_3">Eintrag Löschen</button>
+							<br/>
+						</div>
+						<div ng-if="ConfirmDelete">
+							Soll der folgende Eintrag wirklich gelöscht werden ?
+							<br/>
+							<button type="button" id="delete"  ng-click="DeleteEntry2(false)" class="button_delete_no">Eintrag nicht Löschen</button>
+							<button type="button" id="delete"  ng-click="DeleteEntry2(true)" class="button_delete_yes">Eintrag Löschen</button>
+							<br/>
+						</div>
+						<input id="EditVorname" placeholder="Vorname" ng-model="EditedEntry.Vorname"></input><br/>
+						<input id="EditNachname" placeholder="Nachname" ng-model="EditedEntry.Nachname"></input><br/>
+						<input id="EditEmail" placeholder="Email Addresse" ng-model="EditedEntry.Email"></input><br/>
+						<input id="EditAddresse" placeholder="Addresse" ng-model="EditedEntry.Addresse"></input><br/>
+						<input id="EditTel1" placeholder="Telefonnummer" ng-model="EditedEntry.Tel1"></input><br/>
+						<input id="EditTel2" placeholder="Telefonnummer" ng-model="EditedEntry.Tel2"></input><br/>
 					</div>
-					<input id="EditVorname" placeholder="Vorname" ng-model="EditedEntry.Vorname"></input><br/>
-					<input id="EditNachname" placeholder="Nachname" ng-model="EditedEntry.Nachname"></input><br/>
-					<input id="EditEmail" placeholder="Email Addresse" ng-model="EditedEntry.Email"></input><br/>
-					<input id="EditAddresse" placeholder="Addresse" ng-model="EditedEntry.Addresse"></input><br/>
-					<input id="EditTel1" placeholder="Telefonnummer" ng-model="EditedEntry.Tel1"></input><br/>
-					<input id="EditTel2" placeholder="Telefonnummer" ng-model="EditedEntry.Tel2"></input><br/>
-				</div>
 				</li>
 			</ul>
 
