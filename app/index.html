@@ -1,23 +1,119 @@
 <!doctype html>
 <html lang="en" ng-app="telefonbuch">
-  <head>
-    <meta charset="utf-8">
-    <title>Telefonbuch</title>
+<head>
+	<meta charset="utf-8">
+	<title>Telefonbuch</title>
 	<link rel="stylesheet" type="text/css" href="telefonbuch.css"/>
 	<script src="bower_components/angular/angular.js"></script>
-	<script src="telefonbuch.module.js"></script>
-	<script src="TelefonbuchAnzeige/TelefonbuchAnzeige.module.js"></script>
-	<script src="TelefonbuchAnzeige/TelefonbuchAnzeige.component.js"></script>
-	
-	<script src="TelefonbuchEintrag/TelefonbuchEintrag.module.js"></script>
-	<script src="TelefonbuchEintrag/TelefonbuchEintragAnzeige.component.js"></script>
-	<script src="TelefonbuchEintrag/TelefonbuchEintragEdit.component.js"></script>
-	<script src="TelefonbuchEintrag/TelefonbuchEintragNeu.component.js"></script>
-  </head>
-  <body>
-  <div class="telefonbuch">
-  <h1>Telefonbuch</h1>
-  <telefonbuch-anzeige ></telefonbuch-anzeige>
-  </div>
-  </body>
+	<script src="js/telefonbuch.module.js"></script>
+	<script src="js/TelefonbuchAnzeige.controller.js"></script>
+</head>
+<body>
+	<div class="telefonbuch" >
+		<div ng-controller="telefonbuchAnzeige">
+			<h1>Telefonbuch</h1>
+			
+			
+			<!--------------------------------------------------------------------->
+			<!-- Suchen -->
+			<div> 
+				<button
+					ng-if="!DoFilter" 
+					ng-click="StartFilter()"
+					type="button"
+					class="button_1_1"
+				>Suchen</button>
+
+				<button
+					ng-if="DoFilter" 
+					ng-click="CloseFilter()"
+					type="button"
+					class="button_1_1"
+				>Suche löschen und schließen</button>
+
+				<input
+					placeholder="Name, Straße oder Telefonnummer"
+					ng-model="Filter"
+					ng-if="DoFilter" 
+				></input>
+			</div>
+
+			
+			<!--------------------------------------------------------------------->
+			<!-- Neuer Eintrag -->
+			<button 
+				ng-if="!NewEntry" 
+				ng-click="StartNewEntry()"
+				type="button"
+				class="button_1_1"
+				ng-class="{button_disabled: (EditedIndex != -1 || NewEntry)}"
+			>Neuen Eintrag anlegen</button>
+			<div ng-if="NewEntry">
+				<div>
+					<button type="button" id="save" ng-click="SaveNewEntry()" class="button_1_2">Anlegen</button>
+					<button type="button" id="cancel" ng-click="CancelNewEntry()" class="button_1_2">Abbrechen</button>
+					<br/>
+				</div>
+				<input id="EditVorname" placeholder="Vorname" ng-model="EditedEntry.Vorname"></input><br/>
+				<input id="EditNachname" placeholder="Nachname" ng-model="EditedEntry.Nachname"></input><br/>
+				<input id="EditEmail" placeholder="Email Addresse" ng-model="EditedEntry.Email"></input><br/>
+				<input id="EditAddresse" placeholder="Addresse" ng-model="EditedEntry.Addresse"></input><br/>
+				<input id="EditTel1" placeholder="Telefonnummer" ng-model="EditedEntry.Tel1"></input><br/>
+				<input id="EditTel2" placeholder="Telefonnummer" ng-model="EditedEntry.Tel2"></input><br/>
+			</div>
+
+
+
+			<!--------------------------------------------------------------------->
+			<!-- Anzeige der Einträge  als ungeordnete Liste -->
+			<p ng-if="!Kontakte.length">Keine Einträge vorhanden</p>
+			<ul ng-if="Kontakte.length">
+				<li ng-repeat="kontakt in Kontakte | orderBy:['Nachname', 'Vorname'] | filter:Filter">
+				
+				<!-- Entweder: einfache Anzeige des Eintrags -->
+				<div ng-if="kontakt.Index != EditedIndex">
+					<button type="button" id="edit" ng-click="StartEdit(kontakt.Index)" class="button_1_1 button_header" ng-class="{button_disabled: (EditedIndex != -1 || NewEntry)}">{{kontakt.Vorname}} {{kontakt.Nachname}}</button><br/>
+					{{kontakt.Email}}<br ng-if="kontakt.Email"/>
+					{{kontakt.Tel1}}<br ng-if="kontakt.Tel1"/>
+					{{kontakt.Tel2}}<br ng-if="kontakt.Tel2"/>
+					{{kontakt.Addresse}}<br ng-if="kontakt.Addresse"/></p>
+				</div>
+				
+				<!-- oder: Maske zum Bearbeiten -->
+				<div ng-if="kontakt.Index == EditedIndex"> 
+					<div>
+						<button type="button" id="save" ng-click="SaveEdit()" class="button_1_3">Speichern</button>
+						<button type="button" id="cancel" ng-click="CancelEdit()" class="button_1_3">Abbrechen</button>
+						<button type="button" id="delete"  ng-click="DeleteEntry1()" class="button_1_3">Eintrag Löschen</button>
+						<br/>
+					</div>
+					<div ng-if="ConfirmDelete">
+						Soll der folgende Eintrag wirklich gelöscht werden ?
+						<br/>
+						<button type="button" id="delete"  ng-click="DeleteEntry2(false)" class="button_delete_no">Eintrag nicht Löschen</button>
+						<button type="button" id="delete"  ng-click="DeleteEntry2(true)" class="button_delete_yes">Eintrag Löschen</button>
+						<br/>
+					</div>
+					<input id="EditVorname" placeholder="Vorname" ng-model="EditedEntry.Vorname"></input><br/>
+					<input id="EditNachname" placeholder="Nachname" ng-model="EditedEntry.Nachname"></input><br/>
+					<input id="EditEmail" placeholder="Email Addresse" ng-model="EditedEntry.Email"></input><br/>
+					<input id="EditAddresse" placeholder="Addresse" ng-model="EditedEntry.Addresse"></input><br/>
+					<input id="EditTel1" placeholder="Telefonnummer" ng-model="EditedEntry.Tel1"></input><br/>
+					<input id="EditTel2" placeholder="Telefonnummer" ng-model="EditedEntry.Tel2"></input><br/>
+				</div>
+				</li>
+			</ul>
+
+			
+			<!--------------------------------------------------------------------->
+			<!-- Debug Optionen  -->
+			<div>
+				<h2>NUR ZU TESTZWECKEN</h2>
+				<p>
+				<button type="button" ng-click="InitStoreFill()">Alle Einträge durch Testeinträge ersetzen</button><br/>
+				<button type="button" ng-click="InitStoreEmpty()">Alle Einträge löschen</button>
+				</p>
+			</div>
+		</div>
+	</body>
 </html>

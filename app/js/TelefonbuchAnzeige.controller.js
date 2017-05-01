@@ -1,11 +1,9 @@
 angular.
-	module("telefonbuchAnzeige").
-	component("telefonbuchAnzeige", {
-		templateUrl: "./TelefonbuchAnzeige/TelefonbuchAnzeige.template.html",
-		controller: function TelefonbuchAnzeigeKonstr() {
-			var Self = this;
+	module("telefonbuch").
+	controller("telefonbuchAnzeige", ['$scope', function ($scope) {
+			var Self = $scope;
 			// zu Testzwecken werden Einträge generiert.
-			this.InitStoreFill = function (){
+			Self.InitStoreFill = function (){
 				var Vornamen = ["Anja", "Bernhard", "Max", "Mara", "Thorsten", "Sabine"];
 				var Nachnamen = ["Schmidt", "Müller", "Mayer", "Leineweber"];
 				Self.Kontakte = Array(Vornamen.length * Nachnamen.length);
@@ -15,7 +13,7 @@ angular.
 						var t = zahl % 65536;
 						var f = (3*zahl) % 65536;
 						var index = i*Nachnamen.length + j;
-						this.Kontakte[index] = {
+						Self.Kontakte[index] = {
 							Index: index,
 							Vorname: Vornamen[i],
 							Nachname: Nachnamen[j],
@@ -33,7 +31,7 @@ angular.
 				Self.NewEntry = false;
 			};
 			// zu Testzwecken werden alle Einträge gelöscht.
-			this.InitStoreEmpty = function (){
+			Self.InitStoreEmpty = function (){
 				Self.Kontakte = [];
 				Self.SaveLocalStorage();
 				Self.EditedEntry = {};
@@ -42,28 +40,28 @@ angular.
 				Self.NewEntry = false;
 			};
 
-			this.DoFilter = false;
-			this.Filter = "";
-			this.Kontakte = [];	// Kontakte hält die permanent gespeicherten Daten.
-			this.EditedEntry = {};
-			this.ConfirmDelete = false;
-			this.EditedIndex = -1;
-			this.NewEntry = false;
+			Self.DoFilter = false;
+			Self.Filter = "";
+			Self.Kontakte = [];	// Kontakte hält die permanent gespeicherten Daten.
+			Self.EditedEntry = {};
+			Self.ConfirmDelete = false;
+			Self.EditedIndex = -1;
+			Self.NewEntry = false;
 
 // Es wird versucht die Einträge aus dem LocalStorage zu laden.
-			this.StorageText = localStorage.getItem("Telefonbuch");
-			if (this.StorageText) {
-				Self.Kontakte = JSON.parse(this.StorageText);
+			Self.StorageText = localStorage.getItem("Telefonbuch");
+			if (Self.StorageText) {
+				Self.Kontakte = JSON.parse(Self.StorageText);
 			}
 
-			this.SaveLocalStorage = function (todos) {
+			Self.SaveLocalStorage = function (todos) {
 // Die Funktion SaveLocalStorage wird verwendet um die Daten nach jedem Bearbeiten zu speichern.
 //				Self.StorageText = JSON.stringify(Self.Kontakte);
 				Self.StorageText = angular.toJson(Self.Kontakte);
 				localStorage.setItem("Telefonbuch", Self.StorageText);
 			};
 
-			this.CopyEntry = function(Target, Source) {
+			Self.CopyEntry = function(Target, Source) {
 // Die Funktion CopyEntry kopiert die Werte eines Eintrags.
 				Target.Vorname = Source.Vorname;
 				Target.Nachname = Source.Nachname;
@@ -72,7 +70,7 @@ angular.
 				Target.Tel1 = Source.Tel1;
 				Target.Tel2 = Source.Tel2;
 			}
-			this.StartEdit = function (Index) {
+			Self.StartEdit = function (Index) {
 // Wird durch Buttons aufgerufen um die Bearbeitung eines Eintrags zu starten.
 // Wird bereits ein Eintrag bearbeitet oder angelegt geschieht nichts.
 				if (!Self.NewEntry && Self.EditedIndex == -1 && Index >= 0 && Index < Self.Kontakte.length) {
@@ -82,13 +80,13 @@ angular.
 					Self.ConfirmDelete = false;
 				}
 			};
-			this.CancelEdit = function () {
+			Self.CancelEdit = function () {
 // Ist die Bearbeitenmaske für einen Eintrag offen wird diese geschlossen. Ansonsten passiert nichts.
 				if (Self.EditedIndex != -1) {
 					Self.EditedIndex = -1;
 				}
 			};
-			this.SaveEdit = function () {
+			Self.SaveEdit = function () {
 // Ist die Bearbeitenmaske für einen Eintrag offen werden die Änderungen übernommen und es wird gespeichert. Ansonsten passiert nichts.
 				if (Self.EditedIndex != -1) {
 					Self.CopyEntry(Self.Kontakte[Self.EditedIndex], Self.EditedEntry);
@@ -96,13 +94,13 @@ angular.
 					Self.EditedIndex = -1;
 				}
 			};
-			this.DeleteEntry1 = function () {
+			Self.DeleteEntry1 = function () {
 // Ist die Bearbeitenmaske für einen Eintrag offen wird nach Bestätigung gefragt.
 				if (Self.EditedIndex != -1) {
 					Self.ConfirmDelete = true;
 				}
 			};
-			this.DeleteEntry2 = function (DoDelete) {
+			Self.DeleteEntry2 = function (DoDelete) {
 // Ist die Bearbeitenmaske für einen Eintrag offen und wird der Button zur Bestätigung gedrückt, wird der bearbeitete Eintrag 
 // gelöscht und die Daten werden gespeichert.
 				if (DoDelete && Self.EditedIndex != -1) {
@@ -120,7 +118,7 @@ angular.
 				}
 				Self.ConfirmDelete = false;
 			};
-			this.StartNewEntry = function () {
+			Self.StartNewEntry = function () {
 // StartNewEntry wird in Button verwendet um die Bearbeitenmaske für einen neuen Eintrag zu öffnen.
 				if (!Self.NewEntry && Self.EditedIndex == -1) {
 					Self.EditedEntry.Vorname = "";
@@ -133,7 +131,7 @@ angular.
 					Self.EditedIndex = -1;
 				}
 			};
-			this.SaveNewEntry = function () {
+			Self.SaveNewEntry = function () {
 // Ist die Bearbeitenmaske für einen neuen Eintrag offen wird ein neuer Eintrag erstellt und es wird gespeichert. Ansonsten passiert nichts.
 				if (Self.NewEntry) {
 					Self.NewEntry = false;
@@ -143,22 +141,22 @@ angular.
 					Self.SaveLocalStorage();
 				}
 			};
-			this.CancelNewEntry = function () {
+			Self.CancelNewEntry = function () {
 // Ist die Bearbeitenmaske für einen Eintrag offen wird diese geschlossen. Ansonsten passiert nichts.
 				if (Self.NewEntry) {
 					Self.NewEntry = false;
 				}
 			};
-			this.StartFilter = function() {
+			Self.StartFilter = function() {
 				Self.DoFilter = true;
 				Self.Filter = "";
 			}
-			this.CloseFilter = function() {
+			Self.CloseFilter = function() {
 				Self.DoFilter = false;
 				Self.Filter = "";
 			}
 		}
-	});
+	]);
 
 
 
